@@ -1,0 +1,54 @@
+name: a2rchi-fasrc-3.10
+channels:
+  - anaconda
+  - conda-forge
+  - defaults
+dependencies:
+- python=3.10
+- accelerate==0.22.0
+- backoff==2.2.1
+- beautifulsoup4==4.12.2
+- bitsandbytes==0.41.1
+- chromadb==0.4.6
+- clickhouse-connect==0.6.6
+- coloredlogs==15.0.1
+- duckdb==0.8.1
+- fastapi==0.99.1
+- flask==2.3.3
+- flask-cors==4.0.0
+- flatbuffers==23.5.26
+- hnswlib==0.7.0
+- httptools==0.6.0
+- humanfriendly==10.0
+- langchain==0.0.268
+- loguru==0.7.2
+- lz4==4.3.2
+- mistune==3.0.1
+- monotonic==1.6
+- onnxruntime>=1.15.1,<2.0.0
+- openai==0.27.9
+- overrides==7.3.1
+- pandas>=1.5.3,<2.0.0
+- peft==0.5.0
+- piazza-api==0.14.0
+- posthog==3.0.1
+- psycopg2-binary==2.9.9
+- pulsar-client
+- pygments==2.16.1
+- pypdf==3.16.1
+- python-dotenv==1.0.0
+- python-redmine==2.4.0
+- regex==2023.6.3
+- requests==2.31.0
+- scipy==1.11.2
+- sentence-transformers==3.3.1
+- huggingface-hub
+- sentencepiece==0.1.99
+- sympy==1.12
+- tiktoken==0.4.0
+- tokenizers
+- torch==2.0.1
+- transformers==4.46.1
+- uvloop==0.17.0
+- watchfiles==0.19.0
+- zstandard==0.21.0
