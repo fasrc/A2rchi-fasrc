@@ -1,6 +1,6 @@
 services:
   chat:
-    image: chat:latest
+    image: swinney/a2rchi-chat:latest
     build:
       context: ../..
       dockerfile: deploy/dockerfiles/Dockerfile-chat
@@ -8,32 +8,38 @@ services:
       chromadb:
         condition: service_healthy
     environment:
-      RUNTIME_ENV: dev
+      POSTGRES_USER: a2rchi
+      POSTGRES_PASSWORD_FILE: /run/secrets/pg_password
+      POSTGRES_DB: a2rchi_db
+      RUNTIME_ENV: demo
       OPENAI_API_KEY_FILE: /run/secrets/openai_api_key
       HUGGING_FACE_HUB_TOKEN_FILE: /run/secrets/hf_token
     secrets:
       - openai_api_key
       - hf_token
+      - pg_password
     volumes:
       - a2rchi-data:/root/data/
+      - /Users/swinney/Projects/A2rchi-fasrc/src/a2rchi:/root/A2rchi/a2rchi
+      - /Users/swinney/Projects/A2rchi-fasrc/config:/root/A2rchi/config
     logging:
       options:
         max-size: 10m
     ports:
-      - 7861:7861  # host:container
-    restart: always
+      - "7682:7861"  # host:container
+    restart: "no"
 
   chromadb:
-    image: chromadb:latest
+    image: swinney/chromadb:latest
     build:
       context: ../..
       dockerfile: deploy/dockerfiles/Dockerfile-chroma
     environment:
       RUNTIME_ENV: dev
     ports:
-      - 8000:8000  # host:container
+      - "8000:8000"  # host:container
     volumes:
-      - a2rchi-data:/chroma/chroma/
+      - ../data/a2rchi:/chroma/chroma/
     logging:
       options:
         max-size: 10m
@@ -46,13 +52,48 @@ services:
       retries: 3
       start_period: 10s
       start_interval: 5s
+    networks:
+      default:
+        aliases:
+          - chromadb
+
+  db:
+    image: postgres:16.4
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: a2rchi_db
+      POSTGRES_HOST_AUTH_METHOD: trust
+    secrets:
+      - pg_password
+    volumes:
+      - /Users/swinney/Projects/data/postgresql2:/var/lib/postgresql/data
+      - ../../src/postgresql/sql/:/docker-entrypoint-initdb.d
+    ports:
+      - "5432:5432"  # host:container
+    restart: always
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      default:
+        aliases:
+          - db
 
 volumes:
   a2rchi-data:
     external: true
+  a2rchi-src:
+    external: true
+  postgres_data:
+    external: true
 
 secrets:
   openai_api_key:
-    file: secrets/openai_api_key.txt
+    file: ./secrets/openai_api_key.txt
   hf_token:
-    file: secrets/hf_token.txt
+    file: ./secrets/hf_token.txt
+  pg_password:
+    file: ./secrets/pg_password.txt  

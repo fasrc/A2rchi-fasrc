@@ -1,9 +1,12 @@
+[build-system]
+requires = ["setuptools>=61.0.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
 [project]
 name = "a2rchi"
 version = "0.1.0"
 description = "An AI Augmented Research Chat Intelligence (A2rchi)"
-requires-python = ">=3.7"
-# sorted alphabetically by last name
+requires-python = ">=3.10, <3.13"
 authors = [
     {name="Julius Heitkoetter", email="juliush@mit.edu"},
     {name="Time Kraska", email="kraska@mit.edu"},
@@ -12,11 +15,11 @@ authors = [
     {name="Matthew Russo", email="mdrusso@mit.edu"},
 ]
 dependencies = [
-    "accelerate==0.23.0",
+    "accelerate==0.22.0",
     "backoff==2.2.1",
     "beautifulsoup4==4.12.2",
     "bitsandbytes==0.41.1",
-    "chromadb==0.4.12",
+    "chromadb==0.4.6",
     "clickhouse-connect==0.6.6",
     "coloredlogs==15.0.1",
     "duckdb==0.8.1",
@@ -32,15 +35,15 @@ dependencies = [
     "lz4==4.3.2",
     "mistune==3.0.1",
     "monotonic==1.6",
-    "onnxruntime==1.15.1",
+    "onnxruntime>=1.15.1,<2.0.0",
     "openai==0.27.9",
     "overrides==7.3.1",
-    "pandas==2.1.0",
+    "pandas>=1.5.3,<2.0.0",
     "peft==0.5.0",
     "piazza-api==0.14.0",
     "posthog==3.0.1",
-    "psycopg2==2.9.9",
-    "pulsar-client==3.2.0",
+    "psycopg2-binary==2.9.9",
+    "pulsar-client",
     "pygments==2.16.1",
     "pypdf==3.16.1",
     "python-dotenv==1.0.0",
@@ -48,32 +51,21 @@ dependencies = [
     "regex==2023.6.3",
     "requests==2.31.0",
     "scipy==1.11.2",
-    "sentence-transformers==2.2.2",
+    "sentence-transformers==3.3.1",
+    "huggingface-hub",
     "sentencepiece==0.1.99",
     "sympy==1.12",
     "tiktoken==0.4.0",
-    "tokenizers==0.13.3",
+    "tokenizers",
     "torch==2.0.1",
-    "transformers==4.33.1",
+    "transformers==4.46.1",
     "uvloop==0.17.0",
     "watchfiles==0.19.0",
     "zstandard==0.21.0",
 ]
 
 [tool.setuptools]
-packages = [
-    "a2rchi",
-    "a2rchi.bin",
-    "a2rchi.chains",
-    "a2rchi.interfaces",
-    "a2rchi.interfaces.chat_app",
-    "a2rchi.interfaces.uploader_app",
-    "a2rchi.utils",
-]
+package-dir = {"" = "src"}
 
-[build-system]
-requires = ["setuptools>=61.0.0"]
-build-backed = "setuptools.build_meta"
-
-[project.urls]
-"Homepage" = "https://github.com/mit-submit/A2rchi"
+[tool.setuptools.packages.find]
+where = ["src"]

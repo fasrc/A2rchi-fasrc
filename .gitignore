@@ -13,3 +13,10 @@ venv
 801-content/
 *secrets/
 logos/
+cache/
+data/
+docker_build.sh
+docker_local_build.sh
+*-bak
+orig-environment.yml
+update_deps.py
