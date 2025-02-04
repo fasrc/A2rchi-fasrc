@@ -7,6 +7,10 @@ CREATE USER a2rchi WITH PASSWORD 'pickled.lobster.shoes';
 -- Grant all privileges on schema 'a2rchi_db' to user 'a2rchi'
 GRANT ALL PRIVILEGES ON SCHEMA a2rchi_db TO a2rchi;
 
+-- Grant table privileges
+GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA a2rchi_db TO a2rchi;
+
+
 -- Use the 'a2rchi_db' schema
 SET search_path TO a2rchi_db;
 
